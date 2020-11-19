@@ -53,6 +53,11 @@ public class WorkTicket
         this.issueDescription = issueDescription;
     }
 
+    /*public WorkTicket setWorkTicket(int ticketNumber, String id, LocalDate date, String description)
+    {
+
+
+    }*/
 
     // CONSTRUCTORS
 
@@ -64,11 +69,27 @@ public class WorkTicket
         issueDescription = null;
     }
 
-    WorkTicket(int number, String id, LocalDate date, String description)
+    WorkTicket(int ticketNumber, String id, LocalDate date, String description)
     {
-        workTicketNumber = number;
+        workTicketNumber = ticketNumber;
         clientID = id;
         workTicketDate = date;
         issueDescription = description;
+    }
+
+    // PUBLIC METHODS
+
+    @Override
+    public String toString()
+    {
+        String output = "";
+
+        output = ("Ticket Number: " + this.getWorkTicketNumber());
+        output += ("\n----------------------");
+        output += ("\nClient ID: " + this.getClientID());
+        output += ("\nTicket Date: " + this.getWorkTicketDate());
+        output += ("\nIssue Description: " + this.getIssueDescription());
+
+        return output;
     }
 }
