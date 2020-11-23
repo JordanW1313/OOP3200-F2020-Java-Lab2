@@ -18,8 +18,10 @@ public class WorkTicket
         return workTicketNumber;
     }
 
-    public void setWorkTicketNumber(int workTicketNumber)
+    public void setWorkTicketNumber(int workTicketNumber) throws IllegalArgumentException
     {
+        if(workTicketNumber <= 0)
+            throw new IllegalArgumentException("ERROR: Work ticket number must be a whole number greater than 0");
         this.workTicketNumber = workTicketNumber;
     }
 
@@ -38,8 +40,11 @@ public class WorkTicket
         return workTicketDate;
     }
 
-    public void setWorkTicketDate(LocalDate workTicketDate)
+    public void setWorkTicketDate(LocalDate workTicketDate) throws IllegalArgumentException
     {
+        int ticketYear = workTicketDate.getYear();
+        if (ticketYear < 2000 || ticketYear > 2099)
+            throw new IllegalArgumentException("ERROR: The work ticket date must be between the years 2000 and 2099");
         this.workTicketDate = workTicketDate;
     }
 
@@ -53,11 +58,31 @@ public class WorkTicket
         this.issueDescription = issueDescription;
     }
 
-    /*public WorkTicket setWorkTicket(int ticketNumber, String id, LocalDate date, String description)
+    // sets all attributes of an object to the following parameters, if successful return true, if not return false
+    public boolean SetWorkTicket(int ticketNumber, String id, LocalDate date, String description)
     {
+        try
+        {
+            // see if any exceptions arise in a dummy ticket
+            WorkTicket dummyTicket = new WorkTicket(ticketNumber, id, date, description);
 
-
-    }*/
+            // client number and description must not be empty or simply whitespace
+            if ((id.isBlank()) || (description.isBlank()))
+            {
+                return false;
+            }
+            // no exceptions, can mutate the existing ticket now
+            setWorkTicketNumber(ticketNumber);
+            setClientID(id);
+            setWorkTicketDate(date);
+            setIssueDescription(description);
+        }
+        catch (IllegalArgumentException illegalArgumentEx)
+        {
+            return false;
+        }
+        return true;
+    }
 
     // CONSTRUCTORS
 
@@ -71,9 +96,9 @@ public class WorkTicket
 
     WorkTicket(int ticketNumber, String id, LocalDate date, String description)
     {
-        workTicketNumber = ticketNumber;
+        setWorkTicketNumber(ticketNumber);
         clientID = id;
-        workTicketDate = date;
+        setWorkTicketDate(date);
         issueDescription = description;
     }
 
@@ -88,7 +113,7 @@ public class WorkTicket
         output += ("\n----------------------");
         output += ("\nClient ID: " + this.getClientID());
         output += ("\nTicket Date: " + this.getWorkTicketDate());
-        output += ("\nIssue Description: " + this.getIssueDescription());
+        output += ("\nIssue Description: " + this.getIssueDescription() + "\n");
 
         return output;
     }

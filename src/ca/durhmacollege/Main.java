@@ -1,3 +1,8 @@
+/*
+ * File Name     : OOP3200-F2020-Java-Lab2
+ * Student Names : Ahmed Rizvi[100698429], Jordan Wriker[]
+ * Date          : 2020-11-22
+ */
 package ca.durhmacollege;
 
 import java.time.DateTimeException;
@@ -10,21 +15,70 @@ public class Main
 
     public static void main(String[] args)
     {
-        // DEFINED SCANNER AND DEFAULT WORK TICKET OBJECT
+        // work ticket that uses default constructor
+        WorkTicket defaultTicket = new WorkTicket();
+        System.out.println(defaultTicket.toString());
 
-        Scanner keyboard = new Scanner(System.in);
+        // work ticket that uses parameterized constructor (NO PARAMETER ERROR)
+        WorkTicket testTicket1 = new WorkTicket(1, "TT01", LocalDate.now(), "There should be no errors with this ticket.");
+        System.out.println(testTicket1.toString());
 
-        WorkTicket defaultTest = new WorkTicket();
+        // work ticket with incorrect ticket number (ERROR HERE)
+        try
+        {
+            WorkTicket testTicket2 = new WorkTicket(-5, "TT02", LocalDate.now(), "Incorrect ticket number.");
+        }
+        catch (IllegalArgumentException illegalArgumentException)
+        {
+            System.out.println(illegalArgumentException.toString());
+        }
 
-        // DEFINED INPUT VARIABLES
+        // work ticket with incorrect date (ERROR HERE)
+        try
+        {
+            WorkTicket testTicket3 = new WorkTicket(3, "TT02", LocalDate.of(1999,10,10), "incorrect date");
+        }
+        catch (IllegalArgumentException illegalArgumentException)
+        {
+            System.out.println(illegalArgumentException.toString());
+        }
+
+        // mutating a work ticket correctly
+        testTicket1.SetWorkTicket(1, "TT01", LocalDate.of(2000,1,6), "This ticket was successfully revised");
+        System.out.println("\n" + testTicket1.toString());
+
+        // mutating a work ticket incorrectly
+        boolean ticketHasChanged;
+        ticketHasChanged = testTicket1.SetWorkTicket(-1, "TT01", LocalDate.of(1997,1,6), "");
+        if (ticketHasChanged)
+        {
+            System.out.println("The ticket was successfully altered.");
+            ticketHasChanged = false;
+        }
+        else
+            System.out.println("The ticket could not be altered.");
+        System.out.println("\n" + testTicket1.toString());
+
+        // mutating a work ticket to an empty description (not possible)
+        ticketHasChanged = testTicket1.SetWorkTicket(1, "TT01", LocalDate.now(), "");
+        if (ticketHasChanged)
+        {
+            System.out.println("The ticket was successfully altered.");
+            ticketHasChanged = false;
+        }
+        else
+            System.out.println("The ticket could not be altered.");
+        System.out.println("\n" + testTicket1.toString());
+
+        /*// DEFINED INPUT VARIABLES
 
         int ticketNumber = 0;
         String clientID = "";
         String datePrompt = "";
         LocalDate date = null;
-        String description = "";
+        String description = "";*/
 
-        // INPUT
+        /*// INPUT
 
         System.out.print("Enter the work ticket number: ");
 
@@ -146,6 +200,6 @@ public class Main
         System.out.println();
         System.out.println(defaultTest.toString());
         System.out.println();
-        System.out.println(parameterTest.toString());
+        System.out.println(parameterTest.toString());*/
     }
 }
